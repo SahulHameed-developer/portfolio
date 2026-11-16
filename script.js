@@ -167,6 +167,31 @@
   };
   document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => copyText(b.dataset.copy)));
 
+  // AI assistant (in-browser RAG: same BM25 retriever as the Node.js API)
+  let kb = null, kbIndex = null;
+  const kbReady = fetch('knowledge.json').then(r => r.json()).then(d => { kb = d; kbIndex = window.Retriever.createIndex(d); }).catch(() => {});
+  function answerQuestion(q) {
+    if (!kbIndex) return { text: 'Assistant is still loading. Try again in a second.', sources: [] };
+    const results = kbIndex.search(q, 3);
+    return { text: window.Retriever.extractiveAnswer(results), sources: results.map(r => r.doc.title) };
+  }
+  const chatLog = document.getElementById('chatLog');
+  const chatInput = document.getElementById('chatInput');
+  const bubble = (cls, text) => { const d = document.createElement('div'); d.className = 'bubble ' + cls; d.textContent = text; chatLog.appendChild(d); chatLog.scrollTop = chatLog.scrollHeight; return d; };
+  async function chatAsk(q) {
+    bubble('user', q);
+    const b = bubble('bot typing', '');
+    await kbReady;
+    setTimeout(() => {
+      const a = answerQuestion(q);
+      b.classList.remove('typing'); b.textContent = a.text;
+      if (a.sources.length) { const s = document.createElement('span'); s.className = 'src'; s.textContent = 'Sources: ' + a.sources.join(' · '); b.appendChild(s); }
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }, reduceMotion ? 0 : 450);
+  }
+  document.getElementById('chatForm').addEventListener('submit', (e) => { e.preventDefault(); const q = chatInput.value.trim(); if (q) { chatAsk(q); chatInput.value = ''; } });
+  document.querySelectorAll('[data-ask]').forEach(b => b.addEventListener('click', () => chatAsk(b.dataset.ask)));
+
   // Interactive terminal
   const out = document.getElementById('termOut');
   const input = document.getElementById('termInput');
@@ -184,6 +209,7 @@
   <span class="hl">contact</span>   how to reach me
   <span class="hl">resume</span>    download my resume
   <span class="hl">theme</span>     toggle light / dark
+  <span class="hl">ask</span> &lt;q&gt;   ask my AI assistant a question
   <span class="hl">clear</span>     clear the screen`,
     about: () => `A Mohamed Sahul Hameed — Senior Full Stack Developer, Chennai.
 7+ years building web apps with PHP (Yii2, Laravel), Angular and Node.js.
@@ -192,7 +218,7 @@ Now bringing AI / LLM features into real products. 2× Best Employee of the Year
 <span class="hl">Node.js</span>     Node.js, Express.js, TypeScript, REST, WebSockets, JWT
 <span class="hl">Backend</span>     PHP, Yii2, Laravel, CodeIgniter, WordPress, Microservices
 <span class="hl">Frontend</span>    Angular, JavaScript, jQuery, HTML5, CSS3
-<span class="hl">Data/Cloud</span>  MySQL, Query Optimization, AWS (basic), Git`,
+<span class="hl">Data/Cloud</span>  MySQL, Query Optimization, AWS EC2, Git`,
     ai: () => `<span class="ok">▸</span> Integrating LLM APIs (OpenAI, Claude) into web apps
 <span class="ok">▸</span> Prompt engineering &amp; structured outputs
 <span class="ok">▸</span> RAG: embeddings + vector search over company data
@@ -202,15 +228,17 @@ Now bringing AI / LLM features into real products. 2× Best Employee of the Year
 <span class="ok">▸</span> TypeScript for safer, maintainable services
 <span class="ok">▸</span> Real-time features with WebSockets / Socket.IO
 <span class="ok">▸</span> JWT auth, middleware and async job queues`,
-    experience: () => `2024 — now   Senior Full Stack Developer · Business Gateways International
-2018 — 2024  Web Developer · Sathi Systems Pvt Ltd`,
+    experience: () => `Nov 2024 — now  Senior Full Stack Developer · Business Gateways International
+Nov 2018 — 2024  Web Developer · Sathi Systems Pvt Ltd`,
     projects: () => `Employee Management System  Laravel   −50% load time, +60% engagement
 Ticket Store                CodeIgniter  3rd-party APIs, custom admin
 Maruishi                    WordPress  custom theme, −30% load time
 MBCart                      HTML/CSS/JS  responsive storefront`,
     contact: () => `email   <a href="mailto:mhedsahul@gmail.com">mhedsahul@gmail.com</a>
 phone   <a href="tel:+918122331805">+91 81223 31805</a>
-github  <a href="https://github.com/SahulHameed-developer" target="_blank" rel="noopener">github.com/SahulHameed-developer</a>`,
+linkedin <a href="https://www.linkedin.com/in/mohamed-sahul-hameed-372262117/" target="_blank" rel="noopener">linkedin.com/in/mohamed-sahul-hameed-372262117</a>
+github  <a href="https://github.com/SahulHameed-developer" target="_blank" rel="noopener">github.com/SahulHameed-developer</a>
+notice  3 months · on-site Chennai / hybrid / remote`,
     resume: () => { const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = ''; a.click(); return '<span class="ok">Downloading resume.pdf…</span>'; },
     theme: () => { document.getElementById('themeToggle').click(); return `Theme set to <span class="hl">${root.getAttribute('data-theme')}</span>.`; },
     whoami: () => 'a visitor with great taste in developers 🙂',
@@ -224,6 +252,7 @@ github  <a href="https://github.com/SahulHameed-developer" target="_blank" rel="
     if (cmd) { history.push(raw); hIdx = history.length; }
     if (!cmd) return;
     if (cmd === 'clear') { out.innerHTML = ''; return; }
+    if (cmd.startsWith('ask')) { const q = raw.trim().slice(3).trim(); print(q ? esc(answerQuestion(q).text) : 'Usage: ask &lt;question&gt;, e.g. <span class="hl">ask notice period</span>'); termBody.scrollTop = termBody.scrollHeight; return; }
     const fn = commands[cmd.split(/\s+/)[0]];
     print(fn ? fn() : `<span class="err">command not found: ${esc(cmd)}</span> — type <span class="hl">help</span>`);
     termBody.scrollTop = termBody.scrollHeight;
