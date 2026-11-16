@@ -266,7 +266,14 @@ Now bringing AI / LLM features into real products. 2× Best Employee of the Year
 <span class="ok">▸</span> JWT auth, middleware and async job queues`,
     experience: () => `Nov 2024 — now  Senior Full Stack Developer · Business Gateways International
 Nov 2018 — 2024  Web Developer · Sathi Systems Pvt Ltd`,
-    projects: () => `Employee Management System  Laravel   −50% load time, +60% engagement
+    projects: () => `<span class="hl">Business Gateways (2024–now)</span>
+blu2green       sustainability / ESG / Net Zero platform
+RABT            Oman national procurement &amp; ICV platform
+Jstore          B2B marketplace for JSRS-certified suppliers
+JSRS            oil &amp; gas supplier registration system
+
+<span class="hl">Earlier</span>
+Employee Management System  Laravel   −50% load time, +60% engagement
 Ticket Store                CodeIgniter  3rd-party APIs, custom admin
 Maruishi                    WordPress  custom theme, −30% load time
 MBCart                      HTML/CSS/JS  responsive storefront`,

@@ -443,3 +443,8 @@ button.c-link { font: 500 16px "Inter", sans-serif; color: var(--text); cursor: 
   .cb-panel { position: fixed; inset: auto 8px 8px 8px; width: auto; height: min(75vh, 560px); }
 }
 @media (prefers-reduced-motion: reduce) { .cb-panel { animation: none; } .fab-ping::after { animation: none; } }
+
+/* Current-company projects */
+.project.bgi { border-top: 3px solid var(--primary); }
+.p-kind { font: 500 12.5px "JetBrains Mono", monospace; color: var(--primary); margin: -6px 0 12px; }
+.inline-link { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
