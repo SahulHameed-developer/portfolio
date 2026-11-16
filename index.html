@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>A Mohamed Sahul Hameed — Senior Full Stack Developer</title>
-  <meta name="description" content="Portfolio of A Mohamed Sahul Hameed, Senior Full Stack Developer in Chennai with 7+ years of experience in PHP, Yii2, Laravel, Angular, microservices and MySQL." />
+  <meta name="description" content="Portfolio of A Mohamed Sahul Hameed, Senior Full Stack Developer in Chennai with 7+ years of experience in PHP, Yii2, Laravel, Angular, microservices, Node.js, AI/LLM integrations and MySQL." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -12,6 +12,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232563eb'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-weight='700' font-size='28' fill='white'>SH</text></svg>" />
 </head>
 <body>
+  <div class="progress" id="progress"></div>
+  <div class="spotlight" aria-hidden="true"></div>
   <header class="nav" id="top">
     <div class="container nav-inner">
       <a href="#top" class="logo"><span class="logo-mark">SH</span><span class="logo-text">Sahul Hameed</span></a>
@@ -21,6 +23,7 @@
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#achievements">Achievements</a>
+        <a href="#terminal">Terminal</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="nav-actions">
@@ -42,8 +45,8 @@
         <div class="hero-copy reveal">
           <p class="eyebrow"><span class="dot"></span> Open to Senior Full Stack roles · Chennai</p>
           <h1>Hi, I'm <span class="grad">A Mohamed Sahul Hameed</span></h1>
-          <h2 class="role">Senior Full Stack Developer</h2>
-          <p class="lead">I build and maintain scalable web applications with <strong>Yii2</strong>, <strong>Angular</strong> and <strong>microservices</strong> — backed by 7+ years of PHP, MySQL and JavaScript experience.</p>
+          <h2 class="role"><span class="typed" id="typed">Senior Full Stack Developer</span><span class="caret"></span></h2>
+          <p class="lead">I build and maintain scalable web applications with <strong>Yii2</strong>, <strong>Angular</strong>, <strong>Node.js</strong> and <strong>microservices</strong> — and bring <strong>AI/LLM features</strong> into real products. Backed by 7+ years of PHP, MySQL and JavaScript experience.</p>
           <div class="cta">
             <a href="#contact" class="btn btn-primary">Get in touch</a>
             <a href="resume.pdf" class="btn btn-ghost" download>
@@ -57,8 +60,15 @@
           </ul>
         </div>
         <div class="hero-card reveal">
-          <div class="code-window">
-            <div class="cw-bar"><span></span><span></span><span></span><em>developer.php</em></div>
+          <div class="code-window" id="codeWindow">
+            <div class="cw-bar"><span></span><span></span><span></span>
+              <div class="cw-tabs" role="tablist">
+                <button class="cw-tab active" data-tab="php" role="tab">developer.php</button>
+                <button class="cw-tab" data-tab="node" role="tab">server.js</button>
+                <button class="cw-tab" data-tab="ai" role="tab">assistant.js</button>
+              </div>
+            </div>
+            <div class="cw-pane active" data-pane="php">
 <pre><code><span class="k">class</span> <span class="t">Developer</span>
 {
   <span class="k">public</span> <span class="v">$name</span>   = <span class="s">'Sahul Hameed'</span>;
@@ -66,7 +76,7 @@
   <span class="k">public</span> <span class="v">$years</span>  = <span class="n">7</span>;
   <span class="k">public</span> <span class="v">$stack</span>  = [
     <span class="s">'Yii2'</span>, <span class="s">'Laravel'</span>, <span class="s">'Angular'</span>,
-    <span class="s">'MySQL'</span>, <span class="s">'Microservices'</span>,
+    <span class="s">'Node.js'</span>, <span class="s">'MySQL'</span>, <span class="s">'AI / LLMs'</span>,
   ];
 
   <span class="k">public function</span> <span class="f">ship</span>(): <span class="t">string</span>
@@ -74,6 +84,41 @@
     <span class="k">return</span> <span class="s">'Clean, fast, scalable apps'</span>;
   }
 }</code></pre>
+            </div>
+            <div class="cw-pane" data-pane="node">
+<pre><code><span class="k">import</span> express <span class="k">from</span> <span class="s">'express'</span>;
+
+<span class="k">const</span> <span class="v">app</span> = <span class="f">express</span>();
+<span class="v">app</span>.<span class="f">use</span>(express.<span class="f">json</span>());
+
+<span class="v">app</span>.<span class="f">get</span>(<span class="s">'/api/health'</span>, (req, res) =&gt;
+  res.<span class="f">json</span>({ status: <span class="s">'ok'</span>, uptime: process.<span class="f">uptime</span>() })
+);
+
+<span class="v">app</span>.<span class="f">post</span>(<span class="s">'/api/orders'</span>, <span class="k">async</span> (req, res) =&gt; {
+  <span class="k">const</span> order = <span class="k">await</span> orders.<span class="f">create</span>(req.body);
+  <span class="k">await</span> queue.<span class="f">publish</span>(<span class="s">'order.created'</span>, order);
+  res.<span class="f">status</span>(<span class="n">201</span>).<span class="f">json</span>(order);
+});
+
+<span class="v">app</span>.<span class="f">listen</span>(<span class="n">3000</span>);</code></pre>
+            </div>
+            <div class="cw-pane" data-pane="ai">
+<pre><code><span class="c">// AI-powered support assistant</span>
+<span class="k">async function</span> <span class="f">answer</span>(question) {
+  <span class="k">const</span> docs = <span class="k">await</span> vectorStore.<span class="f">search</span>(question, { k: <span class="n">4</span> });
+
+  <span class="k">const</span> reply = <span class="k">await</span> llm.<span class="f">chat</span>({
+    system: <span class="s">'Answer using only the context.'</span>,
+    messages: [{
+      role: <span class="s">'user'</span>,
+      content: <span class="f">withContext</span>(question, docs),
+    }],
+  });
+
+  <span class="k">return</span> { text: reply.text, sources: docs.<span class="f">map</span>(d =&gt; d.url) };
+}</code></pre>
+            </div>
           </div>
         </div>
       </div>
@@ -95,7 +140,7 @@
         <div class="about-grid">
           <p class="about-text reveal">
             Senior Full Stack Developer with <strong>7+ years</strong> of experience building and maintaining web applications.
-            Currently working with <strong>Yii2, Angular and microservices</strong>, with a strong PHP foundation
+            Currently working with <strong>Yii2, Angular, Node.js and microservices</strong>, and integrating <strong>AI / LLM capabilities</strong> such as chat assistants, smart search and automation into web products. I have a strong PHP foundation
             (Laravel, CodeIgniter, WordPress), MySQL and JavaScript, and basic working knowledge of <strong>AWS</strong>.
             I've delivered 10+ projects and have been recognised as <strong>Best Employee of the Year twice</strong>.
             I'm currently seeking a Senior Full Stack Developer role in Chennai.
@@ -103,6 +148,8 @@
           <div class="about-cards reveal">
             <div class="mini-card"><span class="mc-icon">⚙️</span><div><b>Backend</b><p>PHP, Yii2, Laravel, REST APIs, microservices</p></div></div>
             <div class="mini-card"><span class="mc-icon">🖥️</span><div><b>Frontend</b><p>Angular, JavaScript, responsive UI</p></div></div>
+            <div class="mini-card"><span class="mc-icon">🟢</span><div><b>Node.js</b><p>Express, REST &amp; real-time APIs, TypeScript</p></div></div>
+            <div class="mini-card"><span class="mc-icon">🤖</span><div><b>AI &amp; LLMs</b><p>LLM APIs, prompt engineering, RAG, AI-assisted dev</p></div></div>
             <div class="mini-card"><span class="mc-icon">🚀</span><div><b>Performance</b><p>Query tuning, speed &amp; SEO improvements</p></div></div>
           </div>
         </div>
@@ -116,22 +163,44 @@
           <span class="kicker">02 — Skills</span>
           <h2>Technical Skills</h2>
         </div>
+        <div class="filters skill-filters reveal" role="tablist">
+          <button class="filter active" data-skill="all">All</button>
+          <button class="filter" data-skill="ai">AI &amp; LLMs</button>
+          <button class="filter" data-skill="node">Node.js</button>
+          <button class="filter" data-skill="backend">PHP Backend</button>
+          <button class="filter" data-skill="frontend">Frontend</button>
+          <button class="filter" data-skill="data">Data &amp; Cloud</button>
+        </div>
         <div class="skills-grid">
-          <div class="skill-card reveal">
-            <h3>Backend</h3>
+          <div class="skill-card tilt featured reveal" data-cat="ai">
+            <div class="sc-head"><span class="sc-icon">🤖</span><h3>AI &amp; LLM Integration</h3><span class="new-badge">New</span></div>
+            <ul class="chips"><li>OpenAI API</li><li>Claude API</li><li>Prompt Engineering</li><li>RAG</li><li>Embeddings &amp; Vector Search</li><li>AI Chatbots</li><li>LangChain</li><li>AI-assisted Development</li></ul>
+            <div class="meter"><span>Applied AI in web apps</span><i style="--w:75%"></i></div>
+          </div>
+          <div class="skill-card tilt featured reveal" data-cat="node">
+            <div class="sc-head"><span class="sc-icon">🟢</span><h3>Node.js</h3><span class="new-badge">New</span></div>
+            <ul class="chips"><li>Node.js</li><li>Express.js</li><li>TypeScript</li><li>REST APIs</li><li>WebSockets / Socket.IO</li><li>JWT Auth</li><li>npm</li></ul>
+            <div class="meter"><span>Server-side JavaScript</span><i style="--w:80%"></i></div>
+          </div>
+          <div class="skill-card tilt reveal" data-cat="backend">
+            <div class="sc-head"><span class="sc-icon">⚙️</span><h3>PHP Backend</h3></div>
             <ul class="chips"><li>PHP</li><li>Yii2</li><li>Laravel</li><li>CodeIgniter</li><li>WordPress</li><li>REST APIs</li><li>Microservices</li></ul>
+            <div class="meter"><span>7+ years</span><i style="--w:95%"></i></div>
           </div>
-          <div class="skill-card reveal">
-            <h3>Frontend</h3>
+          <div class="skill-card tilt reveal" data-cat="frontend">
+            <div class="sc-head"><span class="sc-icon">🖥️</span><h3>Frontend</h3></div>
             <ul class="chips"><li>Angular</li><li>JavaScript</li><li>jQuery</li><li>HTML5</li><li>CSS3</li><li>Responsive Design</li></ul>
+            <div class="meter"><span>UI engineering</span><i style="--w:85%"></i></div>
           </div>
-          <div class="skill-card reveal">
-            <h3>Database</h3>
+          <div class="skill-card tilt reveal" data-cat="data">
+            <div class="sc-head"><span class="sc-icon">🗄️</span><h3>Database</h3></div>
             <ul class="chips"><li>MySQL</li><li>Query Optimization</li><li>Database Optimization</li></ul>
+            <div class="meter"><span>Performance tuning</span><i style="--w:85%"></i></div>
           </div>
-          <div class="skill-card reveal">
-            <h3>Cloud &amp; Tools</h3>
+          <div class="skill-card tilt reveal" data-cat="data">
+            <div class="sc-head"><span class="sc-icon">☁️</span><h3>Cloud &amp; Tools</h3></div>
             <ul class="chips"><li>AWS (basic)</li><li>Git</li><li>Android Studio</li></ul>
+            <div class="meter"><span>Deployment &amp; tooling</span><i style="--w:65%"></i></div>
           </div>
         </div>
       </div>
@@ -158,10 +227,11 @@
               <ul class="bullets">
                 <li>Build and maintain full-stack web applications using Yii2 (PHP) on the backend and Angular on the front end.</li>
                 <li>Design and develop microservices and RESTful APIs to keep systems modular, scalable and easy to maintain.</li>
+                <li>Build Node.js services and integrate AI/LLM features (assistants, smart search, content automation) into product workflows.</li>
                 <li>Work with AWS services for application hosting and deployment support.</li>
                 <li>Review code, troubleshoot production issues and support team members to deliver releases on schedule.</li>
               </ul>
-              <ul class="chips sm"><li>Yii2</li><li>Angular</li><li>Microservices</li><li>REST</li><li>AWS</li></ul>
+              <ul class="chips sm"><li>Yii2</li><li>Angular</li><li>Node.js</li><li>AI / LLMs</li><li>Microservices</li><li>REST</li><li>AWS</li></ul>
             </div>
           </li>
           <li class="tl-item reveal">
@@ -201,7 +271,7 @@
           <button class="filter" data-filter="frontend">Frontend</button>
         </div>
         <div class="projects-grid">
-          <article class="project reveal" data-tags="laravel">
+          <article class="project tilt reveal" data-tags="laravel">
             <div class="p-top"><span class="p-icon">👥</span><span class="p-badge">Laravel · jQuery</span></div>
             <h3>Employee Management System</h3>
             <ul class="bullets">
@@ -210,7 +280,7 @@
             </ul>
             <div class="p-metrics"><span><b>−50%</b> load time</span><span><b>+60%</b> engagement</span></div>
           </article>
-          <article class="project reveal" data-tags="codeigniter">
+          <article class="project tilt reveal" data-tags="codeigniter">
             <div class="p-top"><span class="p-icon">🎟️</span><span class="p-badge">CodeIgniter · jQuery</span></div>
             <h3>Ticket Store</h3>
             <ul class="bullets">
@@ -219,7 +289,7 @@
             </ul>
             <div class="p-metrics"><span><b>3rd-party</b> API integrations</span><span><b>Custom</b> admin CMS</span></div>
           </article>
-          <article class="project reveal" data-tags="wordpress">
+          <article class="project tilt reveal" data-tags="wordpress">
             <div class="p-top"><span class="p-icon">🌐</span><span class="p-badge">WordPress · MySQL</span></div>
             <h3>Maruishi</h3>
             <ul class="bullets">
@@ -228,7 +298,7 @@
             </ul>
             <div class="p-metrics"><span><b>−30%</b> load time</span><span><b>Custom</b> theme &amp; plugin</span></div>
           </article>
-          <article class="project reveal" data-tags="frontend">
+          <article class="project tilt reveal" data-tags="frontend">
             <div class="p-top"><span class="p-icon">🛒</span><span class="p-badge">HTML · CSS · JavaScript</span></div>
             <h3>MBCart</h3>
             <ul class="bullets">
@@ -261,11 +331,37 @@
       </div>
     </section>
 
+    <!-- TERMINAL -->
+    <section id="terminal" class="section alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">06 — Playground</span>
+          <h2>Explore my profile from the terminal</h2>
+          <p class="sub">Type a command or tap one below. Press <kbd>/</kbd> anywhere to jump here.</p>
+        </div>
+        <div class="term reveal" id="term">
+          <div class="cw-bar"><span></span><span></span><span></span><em>sahul@portfolio: ~</em></div>
+          <div class="term-body" id="termBody">
+            <div class="term-out" id="termOut" aria-live="polite"></div>
+            <form class="term-line" id="termForm" autocomplete="off">
+              <label for="termInput" class="prompt">sahul@portfolio:~$</label>
+              <input id="termInput" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command" />
+            </form>
+          </div>
+        </div>
+        <div class="term-chips reveal" id="termChips">
+          <button data-cmd="help">help</button><button data-cmd="about">about</button><button data-cmd="skills">skills</button>
+          <button data-cmd="ai">ai</button><button data-cmd="node">node</button><button data-cmd="projects">projects</button>
+          <button data-cmd="contact">contact</button><button data-cmd="clear">clear</button>
+        </div>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact" class="section contact">
       <div class="container">
         <div class="contact-card reveal">
-          <span class="kicker">06 — Contact</span>
+          <span class="kicker">07 — Contact</span>
           <h2>Let's build something great together</h2>
           <p>I'm looking for a Senior Full Stack Developer role in Chennai. Reach out — I'd love to hear about your team and projects.</p>
           <div class="contact-links">
@@ -273,6 +369,10 @@
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
               mhedsahul@gmail.com
             </a>
+            <button class="c-link copy-btn" data-copy="mhedsahul@gmail.com" type="button">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy email
+            </button>
             <a class="c-link" href="tel:+918122331805">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
               +91 81223 31805
@@ -295,6 +395,7 @@
     </div>
   </footer>
 
+  <div class="toast" id="toast" role="status"></div>
   <script src="script.js"></script>
 </body>
 </html>
