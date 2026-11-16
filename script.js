@@ -272,6 +272,10 @@ RABT            Oman national procurement &amp; ICV platform
 Jstore          B2B marketplace for JSRS-certified suppliers
 JSRS            oil &amp; gas supplier registration system
 
+<span class="hl">Open source</span>
+LiveBoard       real-time board: Socket.IO, CRDT, offline-first
+AI Assistant    Node.js + Express RAG API
+
 <span class="hl">Earlier</span>
 Employee Management System  Laravel   −50% load time, +60% engagement
 Ticket Store                CodeIgniter  3rd-party APIs, custom admin

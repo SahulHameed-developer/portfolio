@@ -208,7 +208,7 @@
           </div>
           <div class="skill-card tilt featured reveal" data-cat="node">
             <div class="sc-head"><span class="sc-icon">🟢</span><h3>Node.js</h3><span class="new-badge">New</span></div>
-            <ul class="chips"><li>Node.js</li><li>Express.js</li><li>TypeScript</li><li>REST APIs</li><li>WebSockets / Socket.IO</li><li>JWT Auth</li><li>npm</li></ul>
+            <ul class="chips"><li>Node.js</li><li>Express.js</li><li>TypeScript</li><li>REST APIs</li><li>WebSockets / Socket.IO</li><li>CRDTs</li><li>Event Sourcing</li><li>IndexedDB / Offline-first</li><li>JWT Auth</li><li>npm</li></ul>
             <div class="meter"><span>Server-side JavaScript</span><i style="--w:80%"></i></div>
           </div>
           <div class="skill-card tilt reveal" data-cat="backend">
@@ -294,6 +294,18 @@
           <h2>Problem → what I built → result</h2>
         </div>
         <div class="cases">
+          <article class="case reveal" id="case-liveboard">
+            <div class="case-head"><span class="p-icon">▦</span><div><h3>LiveBoard: real-time collaborative task board</h3><span class="p-badge">Node.js · Socket.IO · CRDT · IndexedDB · Event sourcing</span></div></div>
+            <div class="case-body">
+              <div class="case-steps">
+                <div><h4><span>1</span> Problem</h4><p>When several people edit the same board, changes must show up instantly, never overwrite each other unpredictably, and keep working on a flaky or offline connection.</p></div>
+                <div><h4><span>2</span> What I built</h4><p>A Trello-style board with Socket.IO rooms, live cursors and “who is editing” presence. A CRDT (last-writer-wins fields + hybrid logical clock) merges edits conflict-free; the UI updates optimistically; an IndexedDB outbox makes it offline-first; the Node backend is event-sourced (append-only log → projection, broadcaster, metrics).</p></div>
+                <div><h4><span>3</span> Result</h4><p>Load-tested at <b>1,000 concurrent WebSocket clients</b> with <b>100% delivery</b> and <b>p95 fan-out latency of 19.5&nbsp;ms</b> (local benchmark). Offline edits sync and converge on reconnect, covered by 13 automated tests.</p></div>
+              </div>
+              <figure class="case-fig"><svg class="diagram" viewBox="0 0 906 104" role="img" aria-label="Client edit to IndexedDB to Socket.IO to Event log to Fan-out"><rect x="10" y="20" width="150" height="64" rx="12" class="dg-box"/><text x="85.0" y="49.0" text-anchor="middle" class="dg-t">Client edit</text><text x="85.0" y="65.0" text-anchor="middle" class="dg-t dg-sub">optimistic UI</text><path d="M164 52 H188" class="dg-line" marker-end="url(#arr)"/><rect x="194" y="20" width="150" height="64" rx="12" class="dg-box"/><text x="269.0" y="49.0" text-anchor="middle" class="dg-t">IndexedDB</text><text x="269.0" y="65.0" text-anchor="middle" class="dg-t dg-sub">outbox</text><path d="M348 52 H372" class="dg-line" marker-end="url(#arr)"/><rect x="378" y="20" width="150" height="64" rx="12" class="dg-box"/><text x="453.0" y="49.0" text-anchor="middle" class="dg-t">Socket.IO</text><text x="453.0" y="65.0" text-anchor="middle" class="dg-t dg-sub">validate + dedupe</text><path d="M532 52 H556" class="dg-line" marker-end="url(#arr)"/><rect x="562" y="20" width="150" height="64" rx="12" class="dg-box"/><text x="637.0" y="49.0" text-anchor="middle" class="dg-t">Event log</text><text x="637.0" y="65.0" text-anchor="middle" class="dg-t dg-sub">append-only</text><path d="M716 52 H740" class="dg-line" marker-end="url(#arr)"/><rect x="746" y="20" width="150" height="64" rx="12" class="dg-box dg-hl"/><text x="821.0" y="49.0" text-anchor="middle" class="dg-t">Fan-out</text><text x="821.0" y="65.0" text-anchor="middle" class="dg-t dg-sub">+ projection</text></svg><figcaption>How it works</figcaption></figure>
+            </div>
+            <div class="case-foot"><div class="p-metrics"><span><b>1,000</b> concurrent clients</span><span><b>p95 19.5 ms</b> fan-out</span><span><b>13/13</b> tests</span></div><div class="case-links"><a class="btn btn-ghost sm" href="https://github.com/SahulHameed-developer/liveboard" target="_blank" rel="noopener">View code on GitHub</a><a class="btn btn-ghost sm" href="https://sahulhameed-developer.github.io/liveboard/" target="_blank" rel="noopener">Open live demo</a></div></div>
+          </article>
           <article class="case reveal" id="case-ai">
             <div class="case-head"><span class="p-icon">🤖</span><div><h3>AI Portfolio Assistant</h3><span class="p-badge">Node.js · Express · RAG · LLM</span></div></div>
             <div class="case-body">
@@ -344,6 +356,7 @@
         <div class="filters reveal" role="tablist">
           <button class="filter active" data-filter="all">All</button>
           <button class="filter" data-filter="bgi">Business Gateways</button>
+          <button class="filter" data-filter="oss">Open source</button>
           <button class="filter" data-filter="ai">Node.js &amp; AI</button>
           <button class="filter" data-filter="laravel">Laravel</button>
           <button class="filter" data-filter="codeigniter">CodeIgniter</button>
@@ -395,7 +408,17 @@
             <div class="p-metrics"><span><b>Oil &amp; gas</b> operators</span><span><b>Single window</b> registration</span></div>
             <div class="p-links"><a href="https://businessgateways.com/jsrs/" target="_blank" rel="noopener">Visit businessgateways.com/jsrs ↗</a></div>
           </article>
-          <article class="project tilt reveal" data-tags="ai node">
+          <article class="project tilt reveal" data-tags="oss node realtime">
+            <div class="p-top"><span class="p-icon">▦</span><span class="p-badge">Node.js · Socket.IO · CRDT · IndexedDB</span></div>
+            <h3>LiveBoard: Real-Time Collaborative Board</h3>
+            <ul class="bullets">
+              <li>Trello-style board with live cursors, presence and instant sync over Socket.IO; conflict-free merging with a CRDT and hybrid logical clock.</li>
+              <li>Optimistic UI, offline-first IndexedDB outbox and an event-sourced Node.js backend; 1,000 concurrent clients at p95 19.5&nbsp;ms in a load test.</li>
+            </ul>
+            <div class="p-metrics"><span><b>1,000</b> concurrent clients</span><span><b>100%</b> delivery</span><span><b>13</b> tests</span></div>
+            <div class="p-links"><a href="https://github.com/SahulHameed-developer/liveboard" target="_blank" rel="noopener">Code ↗</a><a href="https://sahulhameed-developer.github.io/liveboard/" target="_blank" rel="noopener">Live demo ↗</a><a href="#case-liveboard">Case study →</a></div>
+          </article>
+          <article class="project tilt reveal" data-tags="ai node oss">
             <div class="p-top"><span class="p-icon">🤖</span><span class="p-badge">Node.js · Express · RAG</span></div>
             <h3>AI Portfolio Assistant</h3>
             <ul class="bullets">
