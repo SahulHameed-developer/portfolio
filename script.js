@@ -192,6 +192,42 @@
   document.getElementById('chatForm').addEventListener('submit', (e) => { e.preventDefault(); const q = chatInput.value.trim(); if (q) { chatAsk(q); chatInput.value = ''; } });
   document.querySelectorAll('[data-ask]').forEach(b => b.addEventListener('click', () => chatAsk(b.dataset.ask)));
 
+  // Floating back-to-top
+  const fabTop = document.getElementById('fabTop');
+  const onFab = () => fabTop.classList.toggle('show', scrollY > 500);
+  window.addEventListener('scroll', onFab, { passive: true }); onFab();
+  fabTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
+
+  // Floating AI chatbot
+  const fabChat = document.getElementById('fabChat');
+  const cbPanel = document.getElementById('cbPanel');
+  const cbLog = document.getElementById('cbLog');
+  const cbInput = document.getElementById('cbInput');
+  const setChat = (open) => {
+    cbPanel.hidden = !open;
+    fabChat.classList.toggle('open', open);
+    fabChat.setAttribute('aria-expanded', open);
+    document.querySelector('.fab-stack').classList.toggle('chat-open', open);
+    if (open) { fabChat.classList.add('seen'); setTimeout(() => cbInput.focus({ preventScroll: true }), 50); }
+  };
+  fabChat.addEventListener('click', () => setChat(cbPanel.hidden));
+  document.getElementById('cbClose').addEventListener('click', () => { setChat(false); fabChat.focus(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !cbPanel.hidden) { setChat(false); fabChat.focus(); } });
+  const cbBubble = (cls, text) => { const d = document.createElement('div'); d.className = 'bubble ' + cls; d.textContent = text; cbLog.appendChild(d); cbLog.scrollTop = cbLog.scrollHeight; return d; };
+  async function cbAsk(q) {
+    cbBubble('user', q);
+    const b = cbBubble('bot typing', '');
+    await kbReady;
+    setTimeout(() => {
+      const a = answerQuestion(q);
+      b.classList.remove('typing'); b.textContent = a.text;
+      if (a.sources.length) { const s = document.createElement('span'); s.className = 'src'; s.textContent = 'Sources: ' + a.sources.join(' · '); b.appendChild(s); }
+      cbLog.scrollTop = cbLog.scrollHeight;
+    }, reduceMotion ? 0 : 450);
+  }
+  document.getElementById('cbForm').addEventListener('submit', (e) => { e.preventDefault(); const q = cbInput.value.trim(); if (q) { cbAsk(q); cbInput.value = ''; } });
+  document.querySelectorAll('[data-cb]').forEach(b => b.addEventListener('click', () => cbAsk(b.dataset.cb)));
+
   // Interactive terminal
   const out = document.getElementById('termOut');
   const input = document.getElementById('termInput');
@@ -238,7 +274,7 @@ MBCart                      HTML/CSS/JS  responsive storefront`,
 phone   <a href="tel:+918122331805">+91 81223 31805</a>
 linkedin <a href="https://www.linkedin.com/in/mohamed-sahul-hameed-372262117/" target="_blank" rel="noopener">linkedin.com/in/mohamed-sahul-hameed-372262117</a>
 github  <a href="https://github.com/SahulHameed-developer" target="_blank" rel="noopener">github.com/SahulHameed-developer</a>
-notice  3 months · on-site Chennai / hybrid / remote`,
+notice  1 month · on-site Chennai / hybrid / remote`,
     resume: () => { const a = document.createElement('a'); a.href = 'resume.pdf'; a.download = ''; a.click(); return '<span class="ok">Downloading resume.pdf…</span>'; },
     theme: () => { document.getElementById('themeToggle').click(); return `Theme set to <span class="hl">${root.getAttribute('data-theme')}</span>.`; },
     whoami: () => 'a visitor with great taste in developers 🙂',
